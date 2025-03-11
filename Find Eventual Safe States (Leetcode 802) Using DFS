@@ -1,0 +1,32 @@
+class Solution {
+    public boolean dfs(int index , boolean[] visited , boolean[] pathVisited , int[][] graph) {
+        visited[index] = true;
+        pathVisited[index] = true;
+        for(int x : graph[index]) {
+             if(!visited[x]) {
+                if(dfs(x , visited , pathVisited , graph))
+                   return true;
+             }
+             else if(pathVisited[x])
+                return true;
+        }
+        pathVisited[index] = false;
+        return false;
+    }
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        int n = graph.length;
+        boolean[] visited = new boolean[n];
+        boolean[] pathVisited = new boolean[n];
+
+        for(int i = 0; i < n; i++) {
+            if(!visited[i])
+              dfs(i , visited , pathVisited , graph);
+        }
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < n; i++) {
+            if(!pathVisited[i])
+               list.add(i);
+        }
+        return list;
+    }
+}
