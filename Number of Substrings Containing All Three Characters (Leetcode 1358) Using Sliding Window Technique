@@ -1,0 +1,25 @@
+class Solution {
+    public boolean isCheck(int[] freq) {
+        if(freq[0] >= 1 && freq[1] >= 1 && freq[2] >= 1)
+           return true;
+        return false;
+    }
+    public int numberOfSubstrings(String s) {
+        int n = s.length();
+        int freq[] = new int[3];
+        int i = 0;
+        int j = 0;
+        int count = 0;
+
+        while(j < n) {
+           freq[s.charAt(j) - 'a']++;
+           while(isCheck(freq)) {
+              count += n - j;
+              freq[s.charAt(i) - 'a']--;
+              i++;
+           }
+           j++;
+        }
+        return count;
+    }
+}
